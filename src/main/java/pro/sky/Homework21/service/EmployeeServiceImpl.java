@@ -13,6 +13,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     private List<Integer> departments = List.of(1, 2, 3, 4, 5);
 
     @Override
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    @Override
+    public List<Integer> getDepartments() {
+        return departments;
+    }
+
+    @Override
     public void addEmployee(String firstName, String lastName, Integer departmentNumber, Integer salaryAmount) {
         if (firstName != null && lastName != null && departmentNumber != null && salaryAmount != null) {
             Employee employee = new Employee(firstName, lastName, departmentNumber, salaryAmount);
@@ -45,40 +55,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         throw new ExceptionMissingData();
     }
 
-    @Override
-    public List<Employee> findDepartmentEmployees(Integer departmentNumber) {
-        List<Employee> departmentEmployees = new ArrayList<>();
-        employees.forEach(employee -> {
-            if (employee.getDepartmentNumber() == departmentNumber) {
-                departmentEmployees.add(employee);
-            }
-        });
-        if (!departmentEmployees.isEmpty()) {
-            return departmentEmployees;
-        }
-        throw new ExceptionEmptyList();
-    }
 
-    @Override
-    public Employee findMaximumSalaryInDepartment(Integer departmentNumber) {
-        Optional<Employee> employee = findDepartmentEmployees(departmentNumber).stream().
-                max(Comparator.comparingInt(Employee::getSalaryAmount));
-        return employee.get();
-    }
-
-    @Override
-    public Employee findMinimumSalaryInDepartment(Integer departmentNumber) {
-        Optional<Employee> employee = findDepartmentEmployees(departmentNumber).stream().
-                min(Comparator.comparingInt(Employee::getSalaryAmount));
-        return employee.get();
-    }
-
-    @Override
-    public List<List<Employee>> showAllEmployees() {
-        List<List<Employee>> allEmployees = new ArrayList<>();
-        departments.forEach(department -> {
-            allEmployees.add(findDepartmentEmployees(department));
-        });
-        return allEmployees;
-    }
 }

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.Homework21.model.Employee;
+import pro.sky.Homework21.service.DepartmentService;
 import pro.sky.Homework21.service.EmployeeService;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.List;
 @RestController
 public class EmployeeController {
     private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
         this.employeeService = employeeService;
+        this.departmentService=departmentService;
     }
 
     @GetMapping(path = "/employee/add")
@@ -32,21 +35,21 @@ public class EmployeeController {
 
     @GetMapping(path = "/departments/max-salary?departmentId=5")
     public Employee findMaximumSalaryInDepartment(@RequestParam Integer departmentId) {
-        return employeeService.findMaximumSalaryInDepartment(departmentId);
+        return departmentService.findMaximumSalaryInDepartment(departmentId);
     }
 
     @GetMapping(path = "/departments/min-salary?departmentId=5")
     public Employee findMinimumSalaryInDepartment(@RequestParam Integer departmentId) {
-        return employeeService.findMinimumSalaryInDepartment(departmentId);
+        return departmentService.findMinimumSalaryInDepartment(departmentId);
     }
 
     @GetMapping(path = "/departments/all?departmentId=5")
     public List<Employee> findDepartmentEmployees(@RequestParam Integer departmentId) {
-        return employeeService.findDepartmentEmployees(departmentId);
+        return departmentService.findDepartmentEmployees(departmentId);
     }
 
     @GetMapping(path = "/departments/all")
     public List<List<Employee>> showAllEmployees() {
-        return employeeService.showAllEmployees();
+        return departmentService.showAllEmployees();
     }
 }

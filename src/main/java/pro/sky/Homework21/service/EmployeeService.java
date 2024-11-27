@@ -9,16 +9,7 @@ public interface EmployeeService {
 
     void removeEmployee(String firstName, String lastNam);
 
+    List<Employee> getEmployees();
 
-    List<Employee> findDepartmentEmployees(Integer departmentNumber);
-
-
-    Employee findMaximumSalaryInDepartment(Integer departmentNumber);
-
-
-    Employee findMinimumSalaryInDepartment(Integer departmentNumber);
-
-
-    List<List<Employee>> showAllEmployees();
-
+    List<Integer> getDepartments();
 }
